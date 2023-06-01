@@ -27,7 +27,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/disciplinas')
-def disciplinas():
+def disciplina():
     conn = get_db()
     cur = conn.cursor()
     cur.execute('SELECT * FROM Disciplina;')
@@ -35,6 +35,16 @@ def disciplinas():
     cur.close()
     print(disciplinas)
     return render_template('disciplinas.html', disciplinas=disciplinas)
+
+@app.route('/professor')
+def professor():
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM Professor;')
+    professores = cur.fetchall()
+    cur.close()
+    print(professores)
+    return render_template('professor.html', professores=professores)
 
 if __name__ == '__main__':
     app.run(debug=True)

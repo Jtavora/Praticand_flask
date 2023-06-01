@@ -1,5 +1,5 @@
 body {
-    background-image: url(/static/images/base.jpg);
+    background-image: url(/static/images/base2.jpg);
     background-size: cover;
     background-repeat: no-repeat;
   }
@@ -20,5 +20,6 @@ body {
     color: black;
     display: flex;
     justify-content: center;
+    font-size: large;
   }
   
