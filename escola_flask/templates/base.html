@@ -21,10 +21,13 @@
             <a class="nav-link" href="{{ url_for('professor') }}">Professores</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Alunos</a>
+            <a class="nav-link" href="{{ url_for('aluno') }}">Alunos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('disciplina') }}">Disciplinas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('login') }}">Admin</a>
           </li>
         </ul>
       </div>

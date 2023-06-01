@@ -1,0 +1,15 @@
+{% extends 'base.html' %}	
+
+{% block content %}
+
+    <div class="my-4">
+        <h1>Alunos</h1>
+            <ul>
+                {% for aluno in alunos %}
+                    <li class="text-center">{{ aluno[1] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}	

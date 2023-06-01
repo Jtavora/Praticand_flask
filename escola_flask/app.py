@@ -46,5 +46,19 @@ def professor():
     print(professores)
     return render_template('professor.html', professores=professores)
 
+@app.route('/aluno')
+def aluno():
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM aluno;')
+    alunos = cur.fetchall()
+    cur.close()
+    print(alunos)
+    return render_template('aluno.html', alunos=alunos)
+
+@app.route('/login')
+def login():
+    return render_template('admin.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
