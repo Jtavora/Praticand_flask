@@ -58,7 +58,17 @@ def aluno():
 
 @app.route('/login')
 def login():
-    return render_template('admin.html')
+    user = request.form['usuario']
+    senha = request.form['senha']
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM Login WHERE usuario = %s AND senha = %s;', (user, senha))
+    login = cur.fetchone()
+    cur.close()
+    if login is None:
+        return render_template('index.html')
+    else:
+        return render_template('login.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
