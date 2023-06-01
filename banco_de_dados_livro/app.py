@@ -20,6 +20,7 @@ def index():
     books = cur.fetchall()
     cur.close()
     conn.close()
+    print (books)
     return render_template('index.html', books=books)
 
 @app.route('/create/', methods=('GET', 'POST'))
