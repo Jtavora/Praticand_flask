@@ -104,6 +104,23 @@ def cadastra_aluno():
     else:
         flash('Aluno nao cadastrado, erro!', 'error')
         return render_template('cadastra_aluno.html')
+    
+@app.route('/admin/op_admin/cadastra_admin', methods=['POST', 'GET'])
+def cadastra_admin():
+    if request.method == 'POST':
+        usuario = request.form.get('usuario')
+        password = request.form.get('password')
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute('INSERT INTO login VALUES (%s, %s);', (usuario, password))
+        conn.commit()
+        cur.close()
+        print(usuario, password)
+        flash('Admin cadastrado com sucesso', 'success')
+        return redirect('/admin/op_admin')
+    else:
+        flash('Admin nao cadastrado, erro!', 'error')
+        return render_template('cadastra_Admin.html')
 
     
 if __name__ == '__main__':
