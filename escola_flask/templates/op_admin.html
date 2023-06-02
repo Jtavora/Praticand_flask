@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Opcoes de admin{% endblock %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+            {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<script>
+    // Remove a mensagem de pop-up após 3 segundos
+    setTimeout(function() {
+        var alerts = document.getElementsByClassName('alert');
+        for (var i = 0; i < alerts.length; i++) {
+            alerts[i].style.display = 'none';
+        }
+    }, 3000);
+</script>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="#" class="nav-link">Cadastrar novo admin</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#" class="nav-link">Adicionar novo professor</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#" class="nav-link">Adicionar nova disciplina</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ url_for('cadastra_aluno') }}" class="nav-link">Adicionar novo aluno</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

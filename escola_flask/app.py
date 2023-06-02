@@ -4,6 +4,13 @@ import psycopg2
 
 app = Flask(__name__)
 
+app.secret_key = 'Tavora'
+
+app.config['FLASH_MESSAGES'] = [
+    {'category': 'success', 'duration': 3000},  
+    {'category': 'error', 'duration': 3000}    
+]
+
 def get_db():
     if 'db' not in g:
         # Estabelece uma nova conexão com o banco de dados
@@ -56,19 +63,48 @@ def aluno():
     print(alunos)
     return render_template('aluno.html', alunos=alunos)
 
-@app.route('/login')
-def login():
-    user = request.form['usuario']
-    senha = request.form['senha']
-    conn = get_db()
-    cur = conn.cursor()
-    cur.execute('SELECT * FROM Login WHERE usuario = %s AND senha = %s;', (user, senha))
-    login = cur.fetchone()
-    cur.close()
-    if login is None:
-        return render_template('index.html')
+@app.route('/admin', methods=['POST', 'GET'])
+def admin():
+    if request.method == 'POST':
+        user = request.form.get('usuario')
+        senha = request.form.get('password')
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM Login WHERE usuario = %s AND senha = %s;', (user, senha))
+        login = cur.fetchone()
+        cur.close()
+        if login is None:
+            print('Login inválido')
+            flash('Login inválido', 'error') 
+            return render_template('index.html')
+        else:
+            print('Login válido')
+            flash('Login bem-sucedido', 'success')
+            return redirect('/admin/op_admin')
     else:
-        return render_template('login.html')
+        return render_template('admin.html')
+    
+@app.route('/admin/op_admin')
+def admin_op():
+    return render_template('op_admin.html')
 
+@app.route('/admin/op_admin/cadastra_aluno', methods=['POST', 'GET'])
+def cadastra_aluno():
+    if request.method == 'POST':
+        nome = request.form.get('aluno')
+        materia = request.form.get('materia')
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute('INSERT INTO aluno (nome, materia) VALUES (%s, %s);', (nome, materia))
+        conn.commit()
+        cur.close()
+        print(nome, materia)
+        flash('Aluno cadastrado com sucesso', 'success')
+        return redirect('/admin/op_admin')
+    else:
+        flash('Aluno nao cadastrado, erro!', 'error')
+        return render_template('cadastra_aluno.html')
+
+    
 if __name__ == '__main__':
     app.run(debug=True)

@@ -2,6 +2,26 @@
 
 {% block content %}
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+            {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<script>
+    // Remove a mensagem de pop-up após 3 segundos
+    setTimeout(function() {
+        var alerts = document.getElementsByClassName('alert');
+        for (var i = 0; i < alerts.length; i++) {
+            alerts[i].style.display = 'none';
+        }
+    }, 3000);
+</script>
+
     <div class="container mt-4">
         <h1>Bem vindo ao sistema escolar</h1>
         <p>Conteudo aqui...</p>
