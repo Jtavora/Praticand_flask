@@ -121,6 +121,39 @@ def cadastra_admin():
     else:
         flash('Admin nao cadastrado, erro!', 'error')
         return render_template('cadastra_Admin.html')
+    
+@app.route('/admin/op_admin/cadastra_professor', methods=['POST', 'GET'])
+def cadastra_prof():
+    if request.method == 'POST':
+        nome = request.form.get('professor')
+        materia = request.form.get('materia')
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute('INSERT INTO professor (nome, materia) VALUES (%s, %s);', (nome, materia))
+        conn.commit()
+        cur.close()
+        print(nome, materia)
+        flash('Professor cadastrado com sucesso', 'success')
+        return redirect('/admin/op_admin')
+    else:
+        flash('Professor nao cadastrado, erro!', 'error')
+        return render_template('cadastra_professor.html')
+    
+@app.route('/admin/op_admin/cadastra_disciplina', methods=['POST', 'GET'])
+def cadastra_dis():
+    if request.method == 'POST':
+        nome = request.form.get('materia')
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute('INSERT INTO disciplina (nome) VALUES (%s);', (nome,))
+        conn.commit()
+        cur.close()
+        print(nome)
+        flash('Disciplina cadastrada com sucesso', 'success')
+        return redirect('/admin/op_admin')
+    else:
+        flash('Disciplina nao cadastrada, erro!', 'error')
+        return render_template('cadastra_disciplina.html')
 
     
 if __name__ == '__main__':

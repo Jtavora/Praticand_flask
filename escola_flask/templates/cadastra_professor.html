@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin{% endblock %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+            {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<script>
+    // Remove a mensagem de pop-up após 3 segundos
+    setTimeout(function() {
+        var alerts = document.getElementsByClassName('alert');
+        for (var i = 0; i < alerts.length; i++) {
+            alerts[i].style.display = 'none';
+        }
+    }, 3000);
+</script>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mt-5 mb-3">Registrar Professor</h2>
+            <form action="{{ url_for('cadastra_prof') }}" method="POST">
+                <div class="form-group">
+                    <label for="aluno">Aluno:</label>
+                    <input type="text" class="form-control" id="professor" name="professor" placeholder="Nome do professor">
+                </div>
+                <div class="form-group">
+                    <label for="materia">Matéria:</label>
+                    <select class="form-control" id="materia" name="materia">
+                        <option value="1">Matemática</option>
+                        <option value="2">Português</option>
+                        <option value="3">História</option>
+                        <option value="4">Geografia</option>
+                        <option value="5">Física</option>
+                        <option value="6">Química</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
