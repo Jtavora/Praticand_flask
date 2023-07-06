@@ -103,7 +103,13 @@ def cadastra_aluno():
         return redirect('/admin/op_admin')
     else:
         flash('Aluno nao cadastrado, erro!', 'error')
-        return render_template('cadastra_aluno.html')
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM disciplina;')
+        disciplinas = cur.fetchall()
+        cur.close()
+        print(disciplinas)
+        return render_template('cadastra_aluno.html', disciplinas=disciplinas)
     
 @app.route('/admin/op_admin/cadastra_admin', methods=['POST', 'GET'])
 def cadastra_admin():

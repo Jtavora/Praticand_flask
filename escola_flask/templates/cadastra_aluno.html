@@ -34,14 +34,13 @@
                 </div>
                 <div class="form-group">
                     <label for="materia">Matéria:</label>
-                    <select class="form-control" id="materia" name="materia">
-                        <option value="1">Matemática</option>
-                        <option value="2">Português</option>
-                        <option value="3">História</option>
-                        <option value="4">Geografia</option>
-                        <option value="5">Física</option>
-                        <option value="6">Química</option>
-                    </select>
+                    {% if disciplinas %}
+                        <select class="form-control" id="materia" name="materia">
+                            {% for m in disciplinas %}
+                                <option value="{{ m.id }}">{{ m.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
                 </div>
                 <button type="submit" class="btn btn-primary">Registrar</button>
             </form>
